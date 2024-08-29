@@ -9,3 +9,10 @@ DATABASE_URL = "postgresql://postgres:password@localhost:5432/books"
 engine = create_engine(DATABASE_URL, echo=True)
 Base = declarative_base()
 SessionLocal = sessionmaker(autocommit=False, autoflush=False, bind=engine)
+
+def get_db():
+    db = SessionLocal()
+    try:
+        yield db
+    finally:
+        db.close()
